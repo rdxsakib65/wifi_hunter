@@ -1,15 +1,19 @@
 #!/bin/bash
-# WiFi Hunter — Auto Installer for Termux
-echo "[*] Updating packages..."
+# WiFi Hunter — Auto Installer
+echo "[*] Updating..."
 apt update -y && apt upgrade -y
 
-echo "[*] Installing Python & Git..."
+echo "[*] Core tools..."
 apt install python git -y
 
-echo "[*] Installing WiFi tools..."
-pkg install aircrack-ng reaver bully hcxdumptool hcxtools iw hashcat -y
+echo "[*] Termux API (for WiFi scan without root)..."
+pkg install termux-api -y
 
-echo "[*] Installing optional tools..."
-pkg install hostapd dnsmasq -y 2>/dev/null
+echo "[*] WiFi attack tools..."
+pkg install root-repo -y
+pkg update -y
+pkg install aircrack-ng reaver -y
 
-echo "[+] Done. Run: python wifi_hunter.py"
+echo ""
+echo "[+] Done! Run: python wifi_hunter.py"
+echo "[!] Also install 'Termux:API' app from F-Droid for WiFi scan"

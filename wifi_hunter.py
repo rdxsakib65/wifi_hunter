@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ╔══════════════════════════════════════════════════════════════════════╗
 # ║          WiFi Hunter v1.0 — Full WiFi Attack & Recon Suite           ║
-# ║          Author : SAKIB GAMIN                                         ║
+# ║          Author : ‌‌SAKIB                                         ║
 # ║          Mode   : Scanner · WPS · Handshake · PMKID · Crack          ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
@@ -69,7 +69,7 @@ def banner():
 
 {G2}  ╔══════════════════════════════════════════════════════╗{R}
 {G2}  ║  {W}Tool    : {G1}WiFi Hunter v1.0                      {G2}║{R}
-{G2}  ║  {W}Author  : {G1}SAKIB                            {G2}║{R}
+{G2}  ║  {W}Author  : {G1} SAKIB                           {G2}║{R}
 {G2}  ║  {W}Modules : {G1}Scan·WPS·HS·PMKID·Crack·Monitor·AP   {G2}║{R}
 {G2}  ╚══════════════════════════════════════════════════════╝{R}
 """)
@@ -118,12 +118,20 @@ def check_dependencies():
 #  INTERFACE MANAGER
 # ════════════════════════════════════════════════════════════════════
 def get_interfaces():
+    ifaces = []
     try:
-        r = subprocess.run(["iw", "dev"], capture_output=True, text=True)
-        ifaces = re.findall(r'Interface\s+(\w+)', r.stdout)
-        return ifaces if ifaces else ["wlan0"]
-    except:
-        return ["wlan0"]
+        # Method 1: ip link
+        r = subprocess.run(["ip", "link", "show"], capture_output=True, text=True)
+        ifaces = re.findall(r'\d+: (wlan\w+|ap\w+|p2p\w+)', r.stdout)
+    except: pass
+    if not ifaces:
+        try:
+            # Method 2: ls /sys/class/net
+            r = subprocess.run(["ls", "/sys/class/net"], capture_output=True, text=True)
+            for n in r.stdout.split():
+                if n.startswith(("wlan","ap","p2p")): ifaces.append(n)
+        except: pass
+    return ifaces if ifaces else ["wlan0"]
 
 def get_monitor_interfaces():
     try:
@@ -135,106 +143,118 @@ def get_monitor_interfaces():
 
 def enable_monitor_mode(iface):
     section(f"MONITOR MODE → {iface}")
-    cmds = [
-        ["ip", "link", "set", iface, "down"],
-        ["iw", iface, "set", "monitor", "none"],
-        ["ip", "link", "set", iface, "up"],
-    ]
-    for cmd in cmds:
-        r = subprocess.run(cmd, capture_output=True)
-        if r.returncode == 0:
-            ok(f"{' '.join(cmd)}")
-        else:
-            # try airmon-ng fallback
-            subprocess.run(["airmon-ng", "start", iface], capture_output=True)
-            break
-    mon_iface = iface + "mon" if check_tool("airmon-ng") else iface
-    ok(f"Monitor mode enabled → {mon_iface}")
+    # Try airmon-ng first
+    if check_tool("airmon-ng"):
+        subprocess.run(["airmon-ng", "check", "kill"], capture_output=True)
+        r = subprocess.run(["airmon-ng", "start", iface], capture_output=True, text=True)
+        ok(f"airmon-ng start {iface}")
+        # check if wlan0mon created
+        mon_iface = iface + "mon"
+        rr = subprocess.run(["ip", "link", "show", mon_iface], capture_output=True)
+        if rr.returncode == 0:
+            ok(f"Monitor interface: {mon_iface}")
+            section_end()
+            return mon_iface
+    # Try iw fallback
+    if check_tool("iw"):
+        subprocess.run(["ip", "link", "set", iface, "down"], capture_output=True)
+        subprocess.run(["iw", iface, "set", "monitor", "none"], capture_output=True)
+        subprocess.run(["ip", "link", "set", iface, "up"], capture_output=True)
+    ok(f"Monitor mode → {iface}")
     section_end()
-    return mon_iface
+    return iface
 
 def disable_monitor_mode(iface):
-    cmds = [
-        ["ip", "link", "set", iface, "down"],
-        ["iw", iface, "set", "type", "managed"],
-        ["ip", "link", "set", iface, "up"],
-    ]
-    for cmd in cmds: subprocess.run(cmd, capture_output=True)
-    ok(f"Monitor mode disabled → {iface} → managed")
+    if check_tool("airmon-ng"):
+        subprocess.run(["airmon-ng", "stop", iface], capture_output=True)
+    elif check_tool("iw"):
+        subprocess.run(["ip", "link", "set", iface, "down"], capture_output=True)
+        subprocess.run(["iw", iface, "set", "type", "managed"], capture_output=True)
+        subprocess.run(["ip", "link", "set", iface, "up"], capture_output=True)
+    ok(f"Monitor mode disabled → {iface}")
 
 # ════════════════════════════════════════════════════════════════════
 #  MODULE 1 — WiFi SCANNER
 # ════════════════════════════════════════════════════════════════════
 def wifi_scanner():
     section("WiFi SCANNER")
-    ifaces = get_interfaces()
-    info(f"Available interfaces: {', '.join(ifaces)}")
-    print(f"\n  {G1}Interface{R}: ", end="")
-    iface = input().strip() or (ifaces[0] if ifaces else "wlan0")
-
-    info(f"Scanning on {iface}...")
     networks = []
 
-    # Method 1: iw scan
+    # Method 1: termux-wifi-scaninfo (no root, no iw needed)
+    info("Scanning via Termux API...")
     try:
         r = subprocess.run(
-            ["iw", iface, "scan"],
-            capture_output=True, text=True, timeout=20
+            ["termux-wifi-scaninfo"],
+            capture_output=True, text=True, timeout=15
         )
-        output = r.stdout
-        if output:
-            blocks = output.split("BSS ")
-            for block in blocks[1:]:
+        if r.returncode == 0 and r.stdout.strip():
+            data = json.loads(r.stdout)
+            for ap in data:
                 net = {}
-                bssid = re.search(r'^([0-9a-f:]{17})', block)
-                ssid  = re.search(r'SSID: (.+)', block)
-                signal= re.search(r'signal: ([-\d.]+)', block)
-                freq  = re.search(r'freq: (\d+)', block)
-                caps  = re.search(r'capability: (.+)', block)
-                wps   = "WPS" in block
-                enc   = "RSN" in block or "WPA" in block
-
-                net["bssid"]   = bssid.group(1).upper() if bssid else "??"
-                net["ssid"]    = ssid.group(1).strip() if ssid else "<hidden>"
-                net["signal"]  = signal.group(1) if signal else "??"
-                net["freq"]    = freq.group(1) if freq else "??"
-                net["channel"] = freq_to_channel(int(net["freq"])) if net["freq"].isdigit() else "?"
-                net["enc"]     = "WPA2" if "RSN" in block else ("WPA" if "WPA" in block else "WEP/OPEN")
-                net["wps"]     = wps
+                net["ssid"]    = ap.get("ssid","<hidden>").strip('"') or "<hidden>"
+                net["bssid"]   = ap.get("bssid","??").upper()
+                net["signal"]  = str(ap.get("level","??"))
+                net["freq"]    = str(ap.get("frequency","??"))
+                net["channel"] = str(freq_to_channel(int(ap.get("frequency",2412))))
+                cap = ap.get("capabilities","")
+                net["enc"]     = "WPA2" if "WPA2" in cap else ("WPA" if "WPA" in cap else ("WEP" if "WEP" in cap else "OPEN"))
+                net["wps"]     = "WPS" in cap
                 networks.append(net)
-    except subprocess.TimeoutExpired:
-        warn("iw scan timed out")
+            ok(f"Termux API scan: {len(networks)} networks")
+    except FileNotFoundError:
+        warn("termux-wifi-scaninfo not found. Install: pkg install termux-api")
+        warn("Also install Termux:API app from F-Droid")
     except Exception as e:
-        warn(f"iw scan failed: {e}")
+        warn(f"Termux API scan failed: {e}")
 
-    # Method 2: iwlist fallback
+    # Method 2: iw scan (root)
     if not networks:
+        ifaces = get_interfaces()
+        info(f"Trying iw scan on: {', '.join(ifaces)}")
+        iface = ifaces[0] if ifaces else "wlan0"
         try:
-            r = subprocess.run(
-                ["iwlist", iface, "scan"],
-                capture_output=True, text=True, timeout=20
-            )
-            output = r.stdout
-            cells = output.split("Cell ")
-            for cell in cells[1:]:
-                net = {}
-                bssid  = re.search(r'Address: ([0-9A-F:]{17})', cell)
-                ssid   = re.search(r'ESSID:"(.+?)"', cell)
-                signal = re.search(r'Signal level=([-\d]+)', cell)
-                chan   = re.search(r'Channel:(\d+)', cell)
-                enc    = re.search(r'Encryption key:(on|off)', cell)
-                wpa    = "WPA" in cell
-
-                net["bssid"]   = bssid.group(1) if bssid else "??"
-                net["ssid"]    = ssid.group(1) if ssid else "<hidden>"
-                net["signal"]  = signal.group(1) if signal else "??"
-                net["channel"] = chan.group(1) if chan else "?"
-                net["freq"]    = channel_to_freq(int(net["channel"])) if net["channel"].isdigit() else "??"
-                net["enc"]     = "WPA2/WPA" if wpa else ("WEP" if enc and enc.group(1)=="on" else "OPEN")
-                net["wps"]     = False
-                networks.append(net)
+            r = subprocess.run(["iw", iface, "scan"],
+                capture_output=True, text=True, timeout=20)
+            if r.stdout:
+                for block in r.stdout.split("BSS ")[1:]:
+                    net = {}
+                    bssid = re.search(r'^([0-9a-f:]{17})', block)
+                    ssid  = re.search(r'SSID: (.+)', block)
+                    signal= re.search(r'signal: ([-\d.]+)', block)
+                    freq  = re.search(r'freq: (\d+)', block)
+                    net["bssid"]   = bssid.group(1).upper() if bssid else "??"
+                    net["ssid"]    = ssid.group(1).strip() if ssid else "<hidden>"
+                    net["signal"]  = signal.group(1) if signal else "??"
+                    net["freq"]    = freq.group(1) if freq else "2412"
+                    net["channel"] = str(freq_to_channel(int(net["freq"]))) if net["freq"].isdigit() else "?"
+                    net["enc"]     = "WPA2" if "RSN" in block else ("WPA" if "WPA" in block else "OPEN")
+                    net["wps"]     = "WPS" in block
+                    networks.append(net)
         except Exception as e:
-            warn(f"iwlist fallback failed: {e}")
+            warn(f"iw scan: {e}")
+
+    # Method 3: termux-wifi-connectioninfo (single network fallback)
+    if not networks:
+        info("Trying connection info fallback...")
+        try:
+            r = subprocess.run(["termux-wifi-connectioninfo"],
+                capture_output=True, text=True, timeout=10)
+            if r.returncode == 0 and r.stdout.strip():
+                d = json.loads(r.stdout)
+                if d.get("bssid"):
+                    net = {
+                        "ssid":    d.get("ssid","<hidden>").strip('"'),
+                        "bssid":   d.get("bssid","??").upper(),
+                        "signal":  str(d.get("rssi","??")),
+                        "freq":    str(d.get("frequency_mhz",2412)),
+                        "channel": "?",
+                        "enc":     "WPA2",
+                        "wps":     False,
+                    }
+                    networks.append(net)
+                    info("Connected network added (limited scan)")
+        except Exception as e:
+            warn(f"Connection info fallback: {e}")
 
     if not networks:
         err("No networks found. Try with root or check your interface.")
