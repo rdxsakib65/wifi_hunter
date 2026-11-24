@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to WiFuX are documented in this file.
+All notable changes to WiFi_Hunter are documented in this file.
 
 ---
 
@@ -18,26 +18,26 @@ All notable changes to WiFuX are documented in this file.
 
 ### Global Command System
 
-- Added `wifux` as a globally registered Termux command via `$PREFIX/bin`
-- `wifux` — run with default settings (wlan0 + Pixie Dust)
-- `wifux menu` — open interactive menu without triggering auto-attack
-- `wifux old` — run the legacy v1 engine (w1.py) for compatibility
-- `wifux update` — pull latest updates from GitHub and re-apply setup
-- `wifux help` — open the built-in interactive help guide
-- `wifux fix` — launch the root/superuser repair script
-- `wifux contact` — open the developer contact menu
+- Added `wifi_hunter` as a globally registered Termux command via `$PREFIX/bin`
+- `wifi_hunter` — run with default settings (wlan0 + Pixie Dust)
+- `wifi_hunter menu` — open interactive menu without triggering auto-attack
+- `wifi_hunter old` — run the legacy v1 engine (w1.py) for compatibility
+- `wifi_hunter update` — pull latest updates from GitHub and re-apply setup
+- `wifi_hunter help` — open the built-in interactive help guide
+- `wifi_hunter fix` — launch the root/superuser repair script
+- `wifi_hunter contact` — open the developer contact menu
 
 ### Installer
 
 - Added `installer.sh` — one-command fresh install from GitHub
 - Added `install.sh` — local setup script for manual installs and updates
 - Both installers display a post-install command reference panel
-- `wifux update` internally re-runs `install.sh` to keep the command fresh
+- `wifi_hunter update` internally re-runs `install.sh` to keep the command fresh
 
 ### Built-in Help Guide (`help.py`)
 
 - Added `help.py` — a full interactive help guide with 9 sections
-- Section 1: What is WiFuX — introduction and overview
+- Section 1: What is WiFi_Hunter — introduction and overview
 - Section 2: Installation steps
 - Section 3: How to find your WiFi interface
 - Section 4: All attack modes explained (Pixie Dust, Bruteforce, PBC)
@@ -45,7 +45,7 @@ All notable changes to WiFuX are documented in this file.
 - Section 6: Copy-paste usage examples
 - Section 7: Troubleshooting common errors
 - Section 8: Warnings and legal notice
-- Section 9: Quick reference for all `wifux` commands
+- Section 9: Quick reference for all `wifi_hunter` commands
 
 ### Contact (`contact.py`)
 

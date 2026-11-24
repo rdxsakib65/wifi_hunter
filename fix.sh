@@ -12,7 +12,7 @@ clear
 echo -e "${C_B_GRN}${B}"
 echo "▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰"
 echo "        F I X   T E R M U X   R O O T          "
-echo "           Powered by: msrofficial            "
+echo "           Powered by: SAKIB            "
 echo "▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰"
 echo -e "${R}"
 
@@ -117,9 +117,9 @@ root_matrix
 echo ""
 
 echo -e "${C_B_GRN}▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰▰${R}"
-echo -e "${B}${C_B_YLW}  PROTOCOL COMPLETE. MAINTAINER: MSR Sakibur${R}"
-echo -e "${C_D_GRN}  [*] GitHub       : ${C_B_GRN}msrofficial${R}"
-echo -e "${C_D_GRN}  [*] Facebook     : ${C_B_GRN}msr.sakibur${R}"
+echo -e "${B}${C_B_YLW}  PROTOCOL COMPLETE. MAINTAINER: SAKIB GAMING${R}"
+echo -e "${C_D_GRN}  [*] GitHub       : ${C_B_GRN}rdxsakib65${R}"
+echo -e "${C_D_GRN}  [*] Facebook     : ${C_B_GRN}rdxsakib65${R}"
 echo -e "${C_D_GRN}  [*] Telegram     : ${C_B_GRN}@msr0official${R}"
 echo -e "${C_D_GRN}  [*] TG Channel   : ${C_B_GRN}@msrpatch${R}"
 echo -e "${C_D_GRN}  [*] Google Search: ${C_B_GRN}msr sakibur${R}"

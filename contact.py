@@ -5,31 +5,32 @@ import subprocess
 import sys
 
 # ─────────────────────────────────────────────
-#  Social Media Links — MSR Sakibur
+#  Social Media Links — SAKIB GAMING
 # ─────────────────────────────────────────────
 CONTACTS = {
-    1: {"name": "Facebook",   "url": "https://m.facebook.com/sakibur.msr"},
-    2: {"name": "Instagram",  "url": "https://instagram.com/msr.sakibur"},
-    3: {"name": "Telegram",   "url": "https://t.me/rdxsakib65"},
+    1: {"name": "Facebook",   "url": "https://www.facebook.com/share/14f5biWkac4/"},
+    2:ni
+    3: {"name": "Telegram",   "url": "https://t.me/panel21p"},
     4: {"name": "GitHub",     "url": "https://github.com/rdxsakib65"},
-    5: {"name": "TG Group",   "url": "https://t.me/msrpatchchat"},
+    5: {"name": "TikTok",     "url": "https://www.tiktok.com/@panel1.1"},
+    6: {"name": "TG Group",   "url": "https://t.me/rdxsakib65"},
 }
 
 # ─────────────────────────────────────────────
 
 def banner():
     print('''\033[1;32m
-███╗   ███╗███████╗██████╗ 
-████╗ ████║██╔════╝██╔══██╗
-██╔████╔██║███████╗██████╔╝
-██║╚██╔╝██║╚════██║██╔══██╗
-██║ ╚═╝ ██║███████║██║  ██║
-╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝\033[0m
+██╗    ██╗██╗███████╗██╗
+██║    ██║██║██╔════╝██║
+██║ █╗ ██║██║█████╗  ██║
+██║███╗██║██║██╔══╝ ██║
+╚███╔███╔╝██║██║     ██║
+ ╚══╝╚══╝ ╚═╝╚═╝      ╚═╝\033[0m
 ''')
 
 def show_menu():
     print('\033[1;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m')
-    print('\033[1;33m  Contact MSR Sakibur — Choose a Platform\033[0m')
+    print('\033[1;33m  Contact SAKIB GAMING — Choose a Platform\033[0m')
     print('\033[1;34m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m')
     print()
     for num, info in CONTACTS.items():

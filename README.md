@@ -1,19 +1,19 @@
 <div align="center">
 
 ```
-██╗    ██╗██╗███████╗██╗   ██╗██╗  ██╗
-██║    ██║██║██╔════╝██║   ██║╚██╗██╔╝
-██║ █╗ ██║██║█████╗  ██║   ██║ ╚███╔╝
-██║███╗██║██║██╔══╝  ██║   ██║ ██╔██╗
-╚███╔███╔╝██║██║     ╚██████╔╝██╔╝ ██╗
- ╚══╝╚══╝ ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝
+██╗    ██╗██╗███████╗██╗
+██║    ██║██║██╔════╝██║
+██║ █╗ ██║██║█████╗  ██║
+██║███╗██║██║██╔══╝ ██║
+╚███╔███╔╝██║██║     ██║
+ ╚══╝╚══╝ ╚═╝╚═╝      ╚═╝
 ```
 
-**WiFi_Hunter** — WPS Security Auditing Tool for Android / Termux
+**WiFi_Hunter v2.0** — WPS Security Auditing Tool for Android / Termux
 
-[![Version](https://img.shields.io/badge/version-2.0-brightgreen)](https://github.com/rdxsakib65/wifi_hunter/releases)
+[![Version](https://img.shields.io/badge/version-2.0-brightgreen)](https://github.com/rdxsakib65/WiFi_Hunter/releases)
 [![Platform](https://img.shields.io/badge/platform-Android%20%2F%20Termux-blue)](https://termux.dev)
-[![Visitors](https://visitor-badge.laobi.icu/badge?page_id=msrofficial.wifi_hunter)](https://github.com/rdxsakib65/wifi_hunter)
+[![Visitors](https://visitor-badge.laobi.icu/badge?page_id=rdxsakib65.wifi_hunter)](https://github.com/rdxsakib65/WiFi_Hunter)
 
 </div>
 
@@ -23,7 +23,7 @@
 
 WiFi_Hunter is a WPS (Wi-Fi Protected Setup) security auditing tool built for Android devices running Termux. It automates Pixie Dust and Bruteforce attacks against WPS-enabled routers, allowing security researchers and network administrators to evaluate the strength of their own wireless infrastructure.
 
-WiFi_Hunter is a complete rewrite of the original v1 engine, introducing a global command system, session management, reporting, improved stability, and a built-in interactive help guide — all optimized for Android / Termux.
+WiFi_Hunter v2.0 is a complete rewrite of the original v1 engine, introducing a global command system, session management, reporting, improved stability, and a built-in interactive help guide — all optimized for Android / Termux.
 
 > This tool is intended for authorized security testing only. Only use it on networks you own or have explicit permission to test.
 
@@ -51,7 +51,7 @@ WiFi_Hunter v2.0 installs globally. Once set up, you can run it from any directo
 ### Method 1 — One Command (Recommended)
 
 ```bash
-curl -sLo installer.sh https://raw.githubusercontent.com/rdxsakib65/wifi_hunter/main/installer.sh && bash installer.sh
+curl -sLo installer.sh https://raw.githubusercontent.com/rdxsakib65/WiFi_Hunter/main/installer.sh && bash installer.sh
 ```
 
 This will automatically update packages, install all dependencies, clone the repository, and register the `wifi_hunter` global command.
@@ -61,7 +61,7 @@ This will automatically update packages, install all dependencies, clone the rep
 ```bash
 pkg update && pkg upgrade -y
 pkg install root-repo git tsu python wpa-supplicant pixiewps iw -y
-git clone https://github.com/rdxsakib65/wifi_hunter
+git clone https://github.com/rdxsakib65/WiFi_Hunter
 cd WiFi_Hunter
 chmod +x installer.sh
 bash installer.sh
@@ -131,10 +131,10 @@ wifi_hunter fix
 
 If the issue persists, use the dedicated fix script:
 ```bash
-curl -sO https://raw.githubusercontent.com/msrofficial/fix-termux-root/main/fix.sh && chmod +x fix.sh && ./fix.sh
+curl -sO https://raw.githubusercontent.com/rdxsakib65/fix-termux-root/main/fix.sh && chmod +x fix.sh && ./fix.sh
 ```
 
-Manual solutions: [github.com/msrofficial/fix-termux-root](https://github.com/msrofficial/fix-termux-root)
+Manual solutions: [github.com/rdxsakib65/fix-termux-root](https://github.com/rdxsakib65/fix-termux-root)
 
 ---
 
@@ -166,15 +166,14 @@ WiFi_Hunter is provided for educational and authorized penetration testing purpo
 
 ## Author
 
-**MD Sakibur Rahman (MSR)**
+**SAKIB GAMING**
 
 | Platform | Link |
 |---|---|
-| GitHub | [msrofficial](https://github.com/msrofficial) |
-| Facebook | [sakibur.msr](https://facebook.com/msr.sakibur) |
-| Instagram | [msr.sakibur](https://instagram.com/msr.sakibur) |
-| Telegram | [@msrofficial](https://t.me/msr0official) |
-| Website | [msrsakibur.pro.bd](https://msrsakibur.pro.bd) |
+| GitHub | [rdxsakib65](https://github.com/rdxsakib65) |
+| Facebook | [rdxsakib65](https://www.facebook.com/share/14f5biWkac4/) |
+| Telegram | [@rdxsakib65](https://t.me/panel21p) |
+| Website | [tiktok.com/@panel1.1](https://tiktok.com/@panel1.1) |
 
 Honorable mentions include: rofl0r, Rayhan, Alamin, Sojib, Sanji, Mustakin, Sakib, rizzi
 

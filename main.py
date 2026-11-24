@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # 5.0
-# Author: @msrofficial
-# GitHub: https://github.com/msrofficial
+# Author: @rdxsakib65 
+# GitHub: https://github.com/rdxsakib65 
 # Time: Tue Jul 07 13:37:08 2026
 # ──────────────────────────────────────────────
 

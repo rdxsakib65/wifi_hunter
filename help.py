@@ -37,12 +37,12 @@ def pause():
 
 def banner():
     print(f'''\033[1;32m
-██╗    ██╗██╗███████╗██╗   ██╗██╗  ██╗
-██║    ██║██║██╔════╝██║   ██║╚██╗██╔╝
-██║ █╗ ██║██║█████╗  ██║   ██║ ╚███╔╝
-██║███╗██║██║██╔══╝  ██║   ██║ ██╔██╗
-╚███╔███╔╝██║██║     ╚██████╔╝██╔╝ ██╗
- ╚══╝╚══╝ ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝\033[0m
+██╗    ██╗██╗███████╗██╗
+██║    ██║██║██╔════╝██║
+██║ █╗ ██║██║█████╗  ██║
+██║███╗██║██║██╔══╝ ██║
+╚███╔███╔╝██║██║     ██║
+ ╚══╝╚══╝ ╚═╝╚═╝      ╚═╝\033[0m
 {C}         Help Guide — v2.0{RS}
 {M}         ★ Stay With MSR{RS}
 ''')
@@ -569,9 +569,9 @@ def section_warnings():
 {M}  Developer:{RS}
 {LINE2}
 
-  {W}MD Sakibur Rahman (MSR){RS}
+  {W}SAKIB GAMING{RS}
   GitHub  : {C}rdxsakib65{RS}
-  Website : {C}https://msrsakibur.netlify.app{RS}
+  Website : {C}https://tiktok.com/@panel1.1{RS}
 
 {TIP} {M}Stay With MSR — Stay safe, stay ethical.{RS}
 ''')

@@ -52,6 +52,11 @@ if [ "\$1" == "fix" ]; then
 fi
 
 # Contact Logic
+if [ "\$1" == "qr" ]; then
+    python show_qr.py
+    exit 0
+fi
+
 if [ "\$1" == "contact" ]; then
     python contact.py
     exit 0
@@ -59,21 +64,21 @@ fi
 
 # Menu Logic
 if [ "\$1" == "menu" ]; then
-    sudo python run_with_qr.py --main
+    sudo python main.py
     exit 0
 fi
 
 # Old Logic
 if [ "\$1" == "old" ]; then
-    sudo python run_with_qr.py -i wlan0 -K
+    sudo python w1.py -i wlan0 -K
     exit 0
 fi
 
 # Run Logic
 if [ -z "\$1" ]; then
-    sudo python run_with_qr.py -i wlan0 -K
+    sudo python main.py -i wlan0 -K
 else
-    sudo python run_with_qr.py "$@"
+    sudo python main.py "\$@"
 fi
 EOF
 
@@ -92,7 +97,7 @@ echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter\033[0m         → Run Wi
 echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter update\033[0m  → Update WiFi_Hunter to latest version"
 echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter help\033[0m    → Show help & usage info"
 echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter fix\033[0m     → Fix root/superuser issues"
-echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter contact\033[0m → Contact the developer (MSR)"
+echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter contact | wifi_hunter qr\033[0m → Contact / QR for saved passwords"
 echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter menu\033[0m    → Run WiFi_Hunter interactive menu"
 echo -e "\033[1;32m  │\033[0m  \033[1;37mwifi_hunter old\033[0m     → Run WiFi_Hunter old engine (w1.py)"
 echo -e "\033[1;32m  └───────────────────────────────────────────┘\033[0m"
@@ -101,7 +106,7 @@ echo -e "\n\033[1;31m  ⚡ IMPORTANT — If 'wifi_hunter' shows:\033[0m"
 echo -e "\033[1;37m     \"no superuser binary detected\"\033[0m"
 echo -e "\033[1;33m  → First try:   \033[1;37mwifi_hunter fix\033[0m"
 echo -e "\033[1;33m  → Still broken? Visit this link for 3 fix methods:\033[0m"
-echo -e "\033[1;36m     https://github.com/msrofficial/fix-termux-root\033[0m"
+echo -e "\033[1;36m     https://github.com/rdxsakib65/fix-termux-root\033[0m"
 echo -e "\033[1;33m  → Copy or screenshot that link right now!\033[0m"
 
 echo -e "\n\033[1;36m══════════════════════════════════════════════\033[0m"
